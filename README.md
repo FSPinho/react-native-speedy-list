@@ -3,13 +3,13 @@
 
 A performance-focused component for React Native.
 
-### Purpose
+## Purpose
 
 **Speedy List** is a high-performance list component for React Native inspired by the great project [RecyclerListView](https://github.com/Flipkart/recyclerlistview). It relies on the idea that repositioning elements and changing their content is faster than instantiating new elements.
 
 This simple idea along with small tricks creates smoother animations, navigations and dialog openings. 
 
-### How it works
+## How it works
 
 While your list may need to handle 1 million items, the screen shows actually only a few of them. Besides that, these big lists usually have a similar layout for all items, which brings us an interesting possibility: why not only render enough items to fill the screen, and reuse items while scrolling? That's the main purpose of **Speedy List**.
 
@@ -19,7 +19,7 @@ Another good improvement is on the first render. Instead of rendering 20 element
 
 That's it, simple and effective.
 
-### Limitations
+## Limitations
 
 At the moment, **Speedy List** can't handle:
 
@@ -31,7 +31,7 @@ At the moment, **Speedy List** can't handle:
 Also, please note that this is a young project, and still needs a lot of improvements. PRs are welcome.
 
 
-### Installation
+## Installation
 
 Install **Speedy List** with either yarn or npm:
 
@@ -39,7 +39,7 @@ Install **Speedy List** with either yarn or npm:
 
 No native setup is needed.
 
-### Usage Example
+## Usage Example
 
 ```TSX  
 const [items] = useState<Array<User>>([{ id: 0, name: "User 001" }, ...]);  
@@ -60,7 +60,7 @@ const itemRenderer = useCallback<Speedy ListItemRenderer<User>>(
     itemKey={"id"} />  
 ```  
 
-### Props
+## Props
 
 | Prop | Value Type | Default Value | Description |  
 |------|------------|---------------|------------|  
@@ -80,11 +80,11 @@ const itemRenderer = useCallback<Speedy ListItemRenderer<User>>(
 | debug | `boolean` | `false` | Enables **Speedy List** debug logs |
 
 
-### Licence
+## Licence
 
 [MIT License](https://github.com/FSPinho/react-native-speedy-list/blob/master/LICENSE)
 
-### Special Thanks
+## Special Thanks
 
 Thanks to [RecyclerListView](https://github.com/Flipkart/recyclerlistview) creator and contributors. And thanks to [kerleysol](https://github.com/kerleysol) and [mardsonferreira](https://github.com/mardsonferreira) for contributing with the list update algorithm.
 
