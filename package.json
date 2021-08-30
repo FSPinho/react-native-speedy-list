@@ -1,12 +1,17 @@
 {
   "name": "react-native-speedy-list",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A performance focused list component for React Native.",
   "homepage": "https://github.com/FSPinho/react-native-speedy-list",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Felipe Pinho <felipepinhodev@gmail.com>",
-  "keywords": ["react-native", "list", "list-view", "performance"],
+  "keywords": [
+    "react-native",
+    "list",
+    "list-view",
+    "performance"
+  ],
   "license": "MIT",
   "files": [
     "lib"
