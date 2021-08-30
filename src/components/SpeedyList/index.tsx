@@ -216,8 +216,8 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
         const recycledItems = [] as Array<SpeedyListItemInternalMeta<T>>
 
         // Scroll direction info.
-        const goingUp = Math.ceil(this.scrollSpeed) < -1
-        const goingDown = Math.floor(this.scrollSpeed) > 1
+        const goingUp = this.scrollSpeed < -1
+        const goingDown = this.scrollSpeed > 1
         const stationary = !goingUp && !goingDown
 
         const recycledHeight = this.meanItemHeight * this.recyclableViewCount

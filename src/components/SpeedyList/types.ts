@@ -14,7 +14,7 @@ export const RECYCLABLE_ITEMS_COUNT = 32
 /**
  * Delay in milliseconds between list updates.
  * */
-export const RECYCLING_DELAY = 1000 / 30 // 30 FPS
+export const RECYCLING_DELAY = 32
 
 /**
  * Function responsible for list items rendering.
