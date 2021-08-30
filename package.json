@@ -1,17 +1,17 @@
 {
   "name": "react-native-speedy-list",
   "version": "0.1.0",
-  "description": "A performance focused list component.",
+  "description": "A performance focused list component for React Native.",
   "homepage": "https://github.com/FSPinho/react-native-speedy-list",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "author": "Felipe Pinho <felipepinhodev@gmail.com>",
+  "keywords": ["react-native", "list", "list-view", "performance"],
   "license": "MIT",
   "files": [
     "lib"
   ],
   "scripts": {
-    "c": "tsc -p .",
     "compile": "rm -rf lib && tsc -p .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "yarn compile",

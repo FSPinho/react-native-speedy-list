@@ -139,7 +139,7 @@ export const App: React.FC = () => {
             {useFlatList ? (
                 <FlatList
                     data={users}
-                    renderItem={itemRenderer}
+                    renderItem={itemRenderer as any}
                     ListHeaderComponent={
                         <View style={styles.listHeader}>
                             <Text>FlatList Header Example</Text>
@@ -158,7 +158,7 @@ export const App: React.FC = () => {
                     itemRenderer={itemRenderer}
                     itemHeight={itemHeight}
                     itemEquals={itemEquals}
-                    itemKey={"id"} // A function is also allowed
+                    itemKey={"id"}
                     header={<Text>Speedy List Header Example</Text>}
                     footer={<Text>Speedy List Footer Example</Text>}
                     headerStyle={styles.listHeader}

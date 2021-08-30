@@ -106,7 +106,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
         this._updateMeta()
 
         // Already executed by the first render.
-        // this._updateContent();
+        // this._updateContentThrottled();
     }
 
     shouldComponentUpdate(nextProps: Readonly<SpeedyListProps<T>>): boolean {
@@ -159,7 +159,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
      * Updating recycled views each list update.
      * */
     componentDidUpdate(): void {
-        this._updateContent()
+        this._updateContentThrottled()
     }
 
     /**
@@ -193,7 +193,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
             const _renderContent = (): void => {
                 if (this.recyclableRefsDict[this.recyclableViewCount - 1]) {
                     limit += initialBatchSize
-                    this._updateContent(limit)
+                    this._updateContentThrottled(limit)
                 }
 
                 if (limit < this.recyclableViewCount) {
@@ -280,7 +280,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
 
         this.scrollY = nativeEvent.contentOffset.y
         this.scrollSpeed = nativeEvent.velocity?.y || 0
-        this._updateContent()
+        this._updateContentThrottled()
     }
 
     /**
@@ -366,13 +366,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
     _updateMeta = (props?: SpeedyListProps<T>): void => {
         this._debug("_updateMeta")
 
-        const {
-            items,
-            itemRenderer,
-            itemHeight,
-            itemKey,
-            recyclableItemsCount = RECYCLABLE_ITEMS_COUNT,
-        } = props || this.props
+        const { items, itemRenderer, itemHeight, itemKey, recyclableItemsCount, recyclingDelay } = props || this.props
 
         if (!items || typeof items.forEach !== "function") {
             throw new Error("SpeedyList: the prop 'items' requires a valid array.")
@@ -390,6 +384,9 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
             throw new Error("SpeedyList: the prop 'itemKey' requires a valid string or function.")
         }
 
+        // Updating throttle delay
+        this._updateContentThrottled = ThrottlingUtil.throttle(this._updateContent, recyclingDelay)
+
         let top = 0
         const seenKeys = [] as Array<String>
         const previousItemsDict = {
@@ -400,15 +397,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
         this.itemsList = []
 
         items.forEach((item, index) => {
-            const key =
-                typeof itemKey === "string"
-                    ? String(item[itemKey])
-                    : String(
-                          itemKey({
-                              item,
-                              index,
-                          })
-                      )
+            const key = typeof itemKey === "string" ? String(item[itemKey]) : String(itemKey({ item, index }))
 
             if (seenKeys.includes(key)) {
                 console.warn(`SpeedyList: found two items with the same key '${key}'.`)
@@ -418,10 +407,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
 
             let height
             if (typeof itemHeight === "function") {
-                height = itemHeight({
-                    item: items[index],
-                    index,
-                })
+                height = itemHeight({ item: items[index], index })
             } else {
                 height = itemHeight
             }
@@ -465,7 +451,7 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
      * Updating recycled views for the next
      * predicted scroll position.
      * */
-    _updateContent = ThrottlingUtil.throttle((limit = Infinity): void => {
+    _updateContent = (limit = Infinity): void => {
         this._debug("_updateContent")
 
         const { itemEquals, itemRenderer } = this.props
@@ -497,7 +483,10 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
                 })
             }
         }
-    }, this.props.recyclingDelay)
+    }
+
+    // Throttling content updates to save performance.
+    _updateContentThrottled = ThrottlingUtil.throttle(this._updateContent)
 
     render(): React.ReactElement {
         this._debug("render")

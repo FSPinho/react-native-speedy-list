@@ -1,3 +1,6 @@
+/**
+ * Shallow comparator.
+ * */
 export const equals = <T>(a: T, b: T): boolean => {
     if (
         a === null ||
