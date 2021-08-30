@@ -13,8 +13,7 @@
 
 import React, { useCallback, useEffect, useState } from "react"
 import { FlatList, Image, StyleSheet, Switch, Text, TouchableWithoutFeedback, View } from "react-native"
-
-import { SpeedyList, SpeedyListItemMeta, SpeedyListItemRenderer } from "../../src/index"
+import { SpeedyList, SpeedyListItemMeta, SpeedyListItemRenderer } from "react-native-speedy-list"
 
 // Simple type to define our list item.
 export interface User {
