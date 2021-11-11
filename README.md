@@ -2,7 +2,8 @@
 # Speedy List
 
 ![npm](https://img.shields.io/npm/v/react-native-speedy-list?style=flat-square)
-![NPM](https://img.shields.io/npm/l/react-native-speedy-list?style=flat-square)
+![npm](https://img.shields.io/npm/l/react-native-speedy-list?style=flat-square)
+![npm](https://img.shields.io/npm/dw/react-native-speedy-list?style=flat-square)
 
 A performance-focused component for React Native.
 
