@@ -1,0 +1,14 @@
+src/
+example/
+node_modules/
+
+.eslintrc.js
+.git
+.idea
+.gitignore
+.npmignore
+.prettierrc.js
+.eslintignore
+babel.config.js
+tsconfig.json
+yarn.lock
