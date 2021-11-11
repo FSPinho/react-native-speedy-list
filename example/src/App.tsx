@@ -13,7 +13,8 @@
 
 import React, { useCallback, useEffect, useState } from "react"
 import { FlatList, Image, StyleSheet, Switch, Text, TouchableWithoutFeedback, View } from "react-native"
-import { SpeedyList, SpeedyListItemMeta, SpeedyListItemRenderer } from "react-native-speedy-list"
+
+import { SpeedyList, SpeedyListItemMeta, SpeedyListItemRenderer } from "../../src/index"
 
 // Simple type to define our list item.
 export interface User {
@@ -141,7 +142,7 @@ export const App: React.FC = () => {
                     renderItem={itemRenderer as any}
                     ListHeaderComponent={
                         <View style={styles.listHeader}>
-                            <Text>FlatList Header Example</Text>
+                            <Text>FlatList Header Example ({users.length} items)</Text>
                         </View>
                     }
                     ListFooterComponent={
@@ -158,7 +159,7 @@ export const App: React.FC = () => {
                     itemHeight={itemHeight}
                     itemEquals={itemEquals}
                     itemKey={"id"}
-                    header={<Text>Speedy List Header Example</Text>}
+                    header={<Text>Speedy List Header Example ({users.length} items)</Text>}
                     footer={<Text>Speedy List Footer Example</Text>}
                     headerStyle={styles.listHeader}
                     footerStyle={styles.listFooter}
