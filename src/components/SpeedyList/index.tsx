@@ -9,6 +9,7 @@ import {
     View,
 } from "react-native"
 
+import { ObjectUtil } from "../../util/ObjectUtil"
 import { ThrottlingUtil } from "../../util/ThrottlingUtil"
 import { SpeedyListRecyclableItem } from "../SpeedyListRecyclableItem"
 import {
@@ -21,7 +22,7 @@ import {
 
 export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
     public static defaultProps = {
-        itemEquals: () => false,
+        itemEquals: ObjectUtil.equals,
         recyclingDelay: RECYCLING_DELAY,
         initialBatchSize: INITIAL_BATCH_SIZE,
         recyclableItemsCount: RECYCLABLE_ITEMS_COUNT,
