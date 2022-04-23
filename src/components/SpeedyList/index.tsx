@@ -276,21 +276,33 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
     /**
      * Handle scroll changes.
      * */
-    _onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    _onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
         this._debug("_onScroll")
+
+        const { nativeEvent } = event
 
         this.scrollY = nativeEvent.contentOffset.y
         this.scrollSpeed = nativeEvent.velocity?.y || 0
         this._updateContentThrottled()
+
+        if (this.props.scrollViewProps?.onScroll) {
+            this.props.scrollViewProps?.onScroll(event)
+        }
     }
 
     /**
      * Watches scroll layout changes.
      * */
-    _onScrollLayout = ({ nativeEvent }: LayoutChangeEvent): void => {
+    _onScrollLayout = (event: LayoutChangeEvent): void => {
         this._debug("_onScrollLayout")
 
+        const { nativeEvent } = event
+
         this.scrollHeight = nativeEvent.layout.height
+
+        if (this.props.scrollViewProps?.onLayout) {
+            this.props.scrollViewProps?.onLayout(event)
+        }
     }
 
     /**
@@ -504,13 +516,13 @@ export class SpeedyList<T = any> extends React.Component<SpeedyListProps<T>> {
         return (
             <View style={styles.scrollWrapper}>
                 <ScrollView
-                    style={styles.scroll}
-                    contentContainerStyle={styles.scrollInner}
+                    {...scrollViewProps}
+                    style={[styles.scroll, scrollViewProps?.style]}
+                    contentContainerStyle={[styles.scrollInner, scrollViewProps?.contentContainerStyle]}
                     scrollEventThrottle={RECYCLING_DELAY}
                     onScroll={this._onScroll}
                     onLayout={this._onScrollLayout}
                     onContentSizeChange={this._onScrollContentChange}
-                    {...scrollViewProps}
                 >
                     <View style={[styles.header, headerStyle]} onLayout={this._onHeaderLayout}>
                         {header}
