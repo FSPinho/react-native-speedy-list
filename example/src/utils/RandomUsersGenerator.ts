@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import RandomNameGenerator from "./RandomNameGenerator"
 
@@ -16,11 +16,11 @@ export function generateRandomUsers(count: number): Array<User> {
     const users: Array<User> = []
     const names = RandomNameGenerator.generate(count)
 
-    names.forEach((name, id) => {
+    names.forEach((name) => {
         users.push({
-            id,
-            name,
+            id: Math.round(Math.random() * 1000000000),
             age: Math.round(Math.random() * 100),
+            name,
         })
     })
 

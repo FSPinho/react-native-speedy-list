@@ -29,7 +29,6 @@ At the moment, **Speedy List** can't handle:
 
 * Horizontal scrolling;
 * Sticky indexes, excepting the first index;
-* Multiple columns;
 * Items with zero height.
 
 Also, please note that this is a young project, and still needs a lot of improvements. PRs are welcome.
@@ -68,22 +67,23 @@ const itemRenderer = useCallback<SpeedyListItemRenderer<User>>(
 
 ## Props
 
-| Prop | Value Type | Default Value | Description |  
-|------|------------|---------------|------------|  
-| items | `Array<T>` | Required* | List entries. |  
-| itemRenderer | `SpeedyListItemRenderer<T>` | Required* | Function to render a list entry. |  
-| itemHeight | `number \| ((meta: SpeedyListItemMeta<T>) => number)` | Required* | Number or function to extract an entry height. |  
-| itemKey | `keyof T \| ((meta: SpeedyListItemMeta<T>) => number \| string)` | Required* | Property name or function to extract an entry unique key.  |  
-| itemEquals | `(a: T, b: T) => boolean` | Defaults to a build-in [shallow comparator](https://github.com/FSPinho/react-native-speedy-list/blob/master/src/util/ObjectUtil/index.ts). | Function to compare two entries. |
-| header | `React.ReactNode` | `null` | List header component. |
-| footer | `React.ReactNode` | `null` | List footer component. |
-| initialBatchSize | `number` | `8` | First render batch size. |
-| recyclableItemsCount | `number` | `32` | Amount of recyclable items to render. This should be enough to fill at least two times the screen height. |
-| recyclingDelay | `number` | `32` | Interval in milliseconds between list updates. |
-| scrollViewProps | `ScrollViewProps` | `null` | Applied to the internal ScrollView component. |
-| headerStyle | `StyleProp<ViewStyle>` | `null` | Applied to the header wrapper component. |
-| footerStyle | `StyleProp<ViewStyle>` | `null` | Applied to the footer wrapper component. |
-| debug | `boolean` | `false` | Enables **Speedy List** debug logs |
+| Prop                 | Value Type                  | Default Value                                                                                                                              | Description                                                                                               |  
+|----------------------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|  
+| items                | `Array<T>`                  | Required*                                                                                                                                  | List entries.                                                                                             |  
+| itemRenderer         | `SpeedyListItemRenderer<T>` | Required*                                                                                                                                  | Function to render a list entry.                                                                          |  
+| itemHeight           | `number \                   | ((meta: SpeedyListItemMeta<T>) => number)`                                                                                                 | Required*                                                                                                 | Number or function to extract an entry height. |  
+| itemKey              | `keyof T \                  | ((meta: SpeedyListItemMeta<T>) => number \                                                                                                 | string)`                                                                                                  | Required* | Property name or function to extract an entry unique key.  |  
+| itemEquals           | `(a: T, b: T) => boolean`   | Defaults to a build-in [shallow comparator](https://github.com/FSPinho/react-native-speedy-list/blob/master/src/util/ObjectUtil/index.ts). | Function to compare two entries.                                                                          |
+| columns              | `number`                    | `1`                                                                                                                                        | Amount of columns per row.                                                                                  |
+| header               | `React.ReactNode`           | `null`                                                                                                                                     | List header component.                                                                                    |
+| footer               | `React.ReactNode`           | `null`                                                                                                                                     | List footer component.                                                                                    |
+| initialBatchSize     | `number`                    | `8`                                                                                                                                        | First render batch size.                                                                                  |
+| recyclableItemsCount | `number`                    | `32`                                                                                                                                       | Amount of recyclable items to render. This should be enough to fill at least two times the screen height. |
+| recyclingDelay       | `number`                    | `32`                                                                                                                                       | Interval in milliseconds between list updates.                                                            |
+| scrollViewProps      | `ScrollViewProps`           | `null`                                                                                                                                     | Applied to the internal ScrollView component.                                                             |
+| headerStyle          | `StyleProp<ViewStyle>`      | `null`                                                                                                                                     | Applied to the header wrapper component.                                                                  |
+| footerStyle          | `StyleProp<ViewStyle>`      | `null`                                                                                                                                     | Applied to the footer wrapper component.                                                                  |
+| debug                | `boolean`                   | `false`                                                                                                                                    | Enables **Speedy List** debug logs                                                                        |
 
 
 ## Licence

@@ -2,15 +2,12 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 
 import { ObjectUtil } from "../../util/ObjectUtil"
-import { SpeedyListRecyclableItemProps, SpeedyListRecyclableItemState } from "./types"
+import { RecyclableItemProps, RecyclableItemState } from "./types"
 
 /**
  * Wrapper around each list item.
  * */
-export class SpeedyListRecyclableItem<T> extends React.Component<
-    SpeedyListRecyclableItemProps<T>,
-    SpeedyListRecyclableItemState<T>
-> {
+export class RecyclableItem<T> extends React.Component<RecyclableItemProps<T>, RecyclableItemState<T>> {
     public static defaultProps = {
         itemEquals: ObjectUtil.equals,
     }
@@ -20,7 +17,7 @@ export class SpeedyListRecyclableItem<T> extends React.Component<
      * */
     itemViewRef: View | null = null
 
-    constructor(props: SpeedyListRecyclableItemProps<T>) {
+    constructor(props: RecyclableItemProps<T>) {
         super(props)
 
         // The default state comes from the first props.
@@ -31,14 +28,11 @@ export class SpeedyListRecyclableItem<T> extends React.Component<
      * The list will call this function attempting
      * to update the current item.
      * */
-    recycle = (props: SpeedyListRecyclableItemProps<T>): void => {
+    recycle = (props: RecyclableItemProps<T>): void => {
         this.setState(props)
     }
 
-    shouldComponentUpdate(
-        _: SpeedyListRecyclableItemProps<T>,
-        nextState: Readonly<SpeedyListRecyclableItemState<T>>
-    ): boolean {
+    shouldComponentUpdate(_: RecyclableItemProps<T>, nextState: Readonly<RecyclableItemState<T>>): boolean {
         // Updating if the item index changed.
         if (this.state.itemProps.index !== nextState.itemProps.index) {
             return true
