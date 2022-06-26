@@ -1,6 +1,6 @@
 {
   "name": "react-native-speedy-list",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A performance focused list component for React Native.",
   "homepage": "https://github.com/FSPinho/react-native-speedy-list",
   "main": "lib/index.js",
