@@ -45,9 +45,9 @@ export class ColumnedRecyclableList<T = any> extends React.Component<ColumnedRec
         const width = this.getColumnWidth()
         const columns = this.getNumberOfColumns()
         return ({ item: items, index, height }) => (
-            <View style={styles.row}>
+            <View style={[styles.row, this.props.rowStyle]}>
                 {items.map((item, i) => (
-                    <View key={i} style={[styles.column, { width }]}>
+                    <View key={i} style={[styles.column, { width }, this.props.cellStyle]}>
                         {renderer({ item, height, index: index * columns + i })}
                     </View>
                 ))}
@@ -72,7 +72,7 @@ export class ColumnedRecyclableList<T = any> extends React.Component<ColumnedRec
     }
 
     getItemEquals: PropMapper<T, "itemEquals"> = (itemEquals) => {
-        return (a, b) => a.every((aItem) => b.every((bItem) => itemEquals(aItem, bItem)))
+        return (a, b) => a.every((aItem, aIndex) => itemEquals(aItem, b[aIndex]))
     }
 
     render() {
@@ -92,6 +92,11 @@ export class ColumnedRecyclableList<T = any> extends React.Component<ColumnedRec
 }
 
 const styles = StyleSheet.create({
-    row: { flex: 1, flexDirection: "row" },
-    column: { flex: 1 },
+    row: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+    },
+    column: {},
 })

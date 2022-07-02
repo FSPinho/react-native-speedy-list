@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react"
-import { Button, Image, StyleSheet, Text, View } from "react-native"
+import { Button, ImageBackground, StyleSheet, Text, View } from "react-native"
 
 import { SpeedyList } from "../../src/index"
 import { generateRandomUsers } from "./utils/RandomUsersGenerator"
 
 export const App = () => {
     const [columns, setColumns] = useState(1)
-    const [users, setUsers] = useState(() => generateRandomUsers(1000))
+    const [users, setUsers] = useState(() => generateRandomUsers(977))
 
     const addColumn = useCallback(() => setColumns((curr) => Math.min(++curr, 5)), [])
     const removeColumn = useCallback(() => setColumns((curr) => Math.max(--curr, 1)), [])
@@ -23,13 +23,12 @@ export const App = () => {
     const itemRenderer = useCallback(
         ({ item, index }) => {
             return (
-                <View style={styles.item}>
-                    <Image style={styles.avatar} source={require("./assets/user.png")} />
+                <ImageBackground style={styles.item} source={item.photo}>
                     <Text>
                         {index} - {item.name}
                     </Text>
                     <Button title={"ADD"} onPress={() => addUser(index)} />
-                </View>
+                </ImageBackground>
             )
         },
         [addUser]
@@ -42,7 +41,13 @@ export const App = () => {
                 <Button title={"ADD"} onPress={addColumn} />
                 <Text>{columns} columns</Text>
             </View>
-            <SpeedyList columns={columns} items={users} itemRenderer={itemRenderer} itemHeight={128} itemKey={"id"} />
+            <SpeedyList
+                columns={columns}
+                items={users}
+                itemRenderer={itemRenderer}
+                itemHeight={({ index }) => (index % 3 === 0 ? 128 : 192)}
+                itemKey={"id"}
+            />
         </View>
     )
 }
