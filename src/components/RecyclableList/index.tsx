@@ -15,9 +15,9 @@ import { RecyclableItem } from "../RecyclableItem"
 import {
     INITIAL_BATCH_SIZE,
     RECYCLABLE_ITEMS_COUNT,
-    RECYCLING_DELAY,
     RecyclableListItemInternalMeta,
     RecyclableListProps,
+    RECYCLING_DELAY,
 } from "./types"
 
 export class RecyclableList<T = any> extends React.Component<RecyclableListProps<T>> {
@@ -26,6 +26,7 @@ export class RecyclableList<T = any> extends React.Component<RecyclableListProps
         recyclingDelay: RECYCLING_DELAY,
         initialBatchSize: INITIAL_BATCH_SIZE,
         recyclableItemsCount: RECYCLABLE_ITEMS_COUNT,
+        onEndReachedOffset: 0,
     }
 
     /**
@@ -68,6 +69,7 @@ export class RecyclableList<T = any> extends React.Component<RecyclableListProps
      * */
     scrollHeight = 0
     scrollContentHeight = 0
+    lastOnEndReachedContentHeight = 0
 
     /**
      * Amount of recyclable items. It should be enough to cover
@@ -284,6 +286,7 @@ export class RecyclableList<T = any> extends React.Component<RecyclableListProps
         this.scrollY = nativeEvent.contentOffset.y
         this.scrollSpeed = nativeEvent.velocity?.y || 0
         this._updateContentThrottled()
+        this._checkOnEndReached()
 
         if (this.props.scrollViewProps?.onScroll) {
             this.props.scrollViewProps?.onScroll(event)
@@ -299,6 +302,7 @@ export class RecyclableList<T = any> extends React.Component<RecyclableListProps
         const { nativeEvent } = event
 
         this.scrollHeight = nativeEvent.layout.height
+        this._checkOnEndReached()
 
         if (this.props.scrollViewProps?.onLayout) {
             this.props.scrollViewProps?.onLayout(event)
@@ -312,6 +316,23 @@ export class RecyclableList<T = any> extends React.Component<RecyclableListProps
         this._debug("_onScrollContentChange")
 
         this.scrollContentHeight = height
+        this._checkOnEndReached()
+    }
+
+    _checkOnEndReached = () => {
+        const { scrollY, scrollHeight, scrollContentHeight } = this
+        const { onEndReached, onEndReachedOffset } = this.props
+
+        const endOffset = scrollContentHeight - scrollHeight - scrollY
+
+        if (
+            typeof onEndReached === "function" &&
+            this.lastOnEndReachedContentHeight !== scrollContentHeight &&
+            endOffset <= (onEndReachedOffset ?? 0.0)
+        ) {
+            this.lastOnEndReachedContentHeight = scrollContentHeight
+            onEndReached()
+        }
     }
 
     /**

@@ -6,7 +6,7 @@ import { generateRandomUsers } from "./utils/RandomUsersGenerator"
 
 export const App = () => {
     const [columns, setColumns] = useState(1)
-    const [users, setUsers] = useState(() => generateRandomUsers(977))
+    const [users, setUsers] = useState(() => generateRandomUsers(2))
 
     const addColumn = useCallback(() => setColumns((curr) => Math.min(++curr, 5)), [])
     const removeColumn = useCallback(() => setColumns((curr) => Math.max(--curr, 1)), [])
@@ -15,6 +15,16 @@ export const App = () => {
         (index) =>
             setUsers(([...curr]) => {
                 curr.splice(index, 0, ...generateRandomUsers(1))
+                return curr
+            }),
+        []
+    )
+
+    const addUsers = useCallback(
+        () =>
+            setUsers(([...curr]) => {
+                console.log("Adding more users...")
+                if (curr.length < 100) curr.push(...generateRandomUsers(20))
                 return curr
             }),
         []
@@ -47,6 +57,8 @@ export const App = () => {
                 itemRenderer={itemRenderer}
                 itemHeight={({ index }) => (index % 3 === 0 ? 128 : 192)}
                 itemKey={"id"}
+                onEndReached={addUsers}
+                onEndReachedOffset={192}
             />
         </View>
     )

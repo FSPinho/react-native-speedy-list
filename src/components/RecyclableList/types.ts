@@ -84,6 +84,12 @@ export interface RecyclableListProps<T> {
     itemEquals: (a: T, b: T) => boolean
 
     /**
+     * Called when the ScrollView reaches the bottom.
+     * */
+    onEndReached?: () => void
+    onEndReachedOffset?: number
+
+    /**
      * List header and footer elements.
      * */
     header?: React.ReactNode
